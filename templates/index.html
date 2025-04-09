@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="hero-section">
+        <div class="container text-center">
+            {% if current_user.is_authenticated %}
+            <h1 class="display-4 mb-4">Привет, {{current_user.name}}!</h1>
+            <h1 class="display-4 mb-4">Мы нашли кое-что для вас</h1>
+            {% else %}
+            <h1 class="display-4 mb-4">Тут находят свои идеальные мероприятия</h1>
+            {% endif %}
+        </div>
+    </section>
+    <section class="container my-5">
+        <h2 class="mb-4">Популярные мероприятия</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for event in events %}
+                <div class="col">
+                    <div class="card h-100 event-card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event }}</h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="bg-light py-5">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="p-3">
+                        <h3><i class="bi bi-ticket-perforated fs-1 text-primary"></i></h3>
+                        <h4>Мгновенное бронирование</h4>
+                        <p>Быстрое и безопасное оформление заказа</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="p-3">
+                        <h3><i class="bi bi-shield-check fs-1 text-primary"></i></h3>
+                        <h4>Гарантия безопасности</h4>
+                        <p>Защищенные платежи и возврат средств</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="p-3">
+                        <h3><i class="bi bi-headset fs-1 text-primary"></i></h3>
+                        <h4>Поддержка 24/7</h4>
+                        <p>Всегда готовы помочь с любыми вопросами</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

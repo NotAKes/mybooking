@@ -1,0 +1,18 @@
+.hero-section {
+            background: rgb(16, 168, 250);
+            height: 50vh;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+.event-card {
+    transition: transform 0.3s;
+}
+.event-card:hover {
+    transform: translateY(-5px);
+}
+.category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
