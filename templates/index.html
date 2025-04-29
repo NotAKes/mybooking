@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+<link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
 {% block content %}
     <section class="hero-section">
         <div class="container text-center">
@@ -18,8 +18,11 @@
                 <div class="col">
                     <div class="card h-100 event-card">
                         <div class="card-body">
-                            <h5 class="card-title">{{ event }}</h5>
+                            <h5 class="card-title">{{ event.name }}</h5>
+                            <h6 class="card-title">{{ event.place }}</h6>
+                            <h6 class="card-title">{{ event.start_date_formatted}}</h6>
                         </div>
+
                     </div>
                 </div>
             {% endfor %}

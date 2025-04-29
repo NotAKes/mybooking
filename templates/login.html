@@ -1,18 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="" method="post" novalidate>
-        <div>
-            {{ form.csrf_token }}
+<link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
+<script src="static/login.js"></script>
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header text-center mb-4">
+            <h2 class="fw-bold">Вход в систему</h2>
+            <p class="text-muted">Для доступа к бронированию билетов</p>
         </div>
-        {% for field in form if field.name != 'csrf_token' %}
-            <div>
-                {{ field.label() }}
-                {{ field() }}
-                {% for error in field.errors %}
-                    <div class="error">{{ error }}</div>
+        <form action="" method="post" novalidate class="login-form">
+            {{ form.csrf_token }}
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-envelope"></i>
+                    </span>
+                    {{ form.email(class="form-control", placeholder="example@mail.com") }}
+                </div>
+                {% for error in form.email.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
                 {% endfor %}
             </div>
-        {% endfor %}
-    </form>
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-lock"></i>
+                    </span>
+                    {{ form.password(class="form-control", placeholder="Введите пароль", id="passwordField") }}
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="bi bi-eye" id="passwordIcon"></i>
+                    </button>
+                </div>
+                {% for error in form.password.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-3 form-check">
+                {{ form.remember_me(class="form-check-input") }}
+                {{ form.remember_me.label(class="form-check-label") }}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Войти
+            </button>
+            <div class="text-center">
+                <a href="{{ url_for('register') }}" class="text-muted">Создать новый аккаунт</a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

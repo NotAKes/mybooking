@@ -1,9 +1,9 @@
 .hero-section {
-            background: rgb(16, 168, 250);
-            height: 50vh;
-            color: white;
-            display: flex;
-            align-items: center;
+    background: rgb(16, 168, 250);
+    height: 50vh;
+    color: white;
+    display: flex;
+    align-items: center;
         }
 .event-card {
     transition: transform 0.3s;

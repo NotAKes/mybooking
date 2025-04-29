@@ -1,12 +1,15 @@
 from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_user, logout_user, login_required
+from data.event import Event
 from forms.user import RegisterForm
+from forms.create_event import CreateEvent
 from data.users import User
 from data import db_session
-from data.login import LoginForm
+from forms.login import LoginForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
 
 def main():
     db_session.global_init("db/blogs.db")
@@ -15,6 +18,8 @@ def main():
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
@@ -23,7 +28,9 @@ def load_user(user_id):
 
 @app.route("/")
 def index():
-    events = ['Новогодние скидки на лыжный курорт', 'Концерт на территории отеля']
+    db_sess = db_session.create_session()
+    events = sorted(db_sess.query(Event).all(), key=lambda a: a.start_date)
+
     return render_template("index.html", events=events)
 
 
@@ -64,11 +71,33 @@ def login():
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
 
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect("/")
+
+
+@login_required
+@app.route('/event/create', methods=['GET', 'POST'])
+def create_event():
+    form = CreateEvent()
+    db_sess = db_session.create_session()
+    if form.validate_on_submit():
+        start_date_formatted = form.start_date.data.strftime("%d %B %H:%M")
+        event = Event(
+            name=form.name.data,
+            about=form.about.data,
+            city=form.city.data,
+            place=form.place.data,
+            start_date=form.start_date.data,
+            start_date_formatted=start_date_formatted
+        )
+        db_sess.add(event)
+        db_sess.commit()
+        return redirect('/')
+    return render_template('create_event.html', title='Создание мероприятия', form=form)
 
 
 if __name__ == '__main__':
