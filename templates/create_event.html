@@ -12,7 +12,6 @@
                 {% for error in field.errors %}
                     <div class="error">{{ error }}</div>
                 {% endfor %}
-                <span class="validation_error">{{ ', '.join(form.image.errors) }}</span><br>
             </div>
         {% endfor %}
     </form>
