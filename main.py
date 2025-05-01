@@ -1,5 +1,6 @@
+import os
 from flask import Flask, render_template, redirect
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from data.event import Event
 from forms.user import RegisterForm
 from forms.create_event import CreateEvent
@@ -7,12 +8,15 @@ from data.users import User
 from data import db_session
 from forms.login import LoginForm
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+upload_folder = os.path.join('static', 'uploads')
+app.config['UPLOAD'] = upload_folder
 
 
 def main():
-    db_session.global_init("db/blogs.db")
+    db_session.global_init("db/database.db")
     app.run()
 
 
@@ -79,13 +83,20 @@ def logout():
     return redirect("/")
 
 
-@login_required
+
 @app.route('/event/create', methods=['GET', 'POST'])
+@login_required
 def create_event():
+    got_id = current_user.get_id()
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(User.id == got_id).first()
+    if not user.is_admin:
+        return  redirect('/')
     form = CreateEvent()
     db_sess = db_session.create_session()
     if form.validate_on_submit():
         start_date_formatted = form.start_date.data.strftime("%d %B %H:%M")
+        print(form.image.data)
         event = Event(
             name=form.name.data,
             about=form.about.data,
