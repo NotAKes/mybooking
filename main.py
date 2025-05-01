@@ -96,7 +96,6 @@ def create_event():
     db_sess = db_session.create_session()
     if form.validate_on_submit():
         start_date_formatted = form.start_date.data.strftime("%d %B %H:%M")
-        print(form.image.data)
         event = Event(
             name=form.name.data,
             about=form.about.data,
@@ -109,6 +108,11 @@ def create_event():
         db_sess.commit()
         return redirect('/')
     return render_template('create_event.html', title='Создание мероприятия', form=form)
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('create_event.html', title='Ваш профиль', form=[])
 
 
 if __name__ == '__main__':

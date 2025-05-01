@@ -4,10 +4,10 @@ from wtforms import PasswordField, StringField, TextAreaField, SubmitField, File
 from wtforms.fields.datetime import DateTimeLocalField
 from wtforms.validators import DataRequired
 
-ALLOWED_SUFFIXES = ['.png', '.jpg']
+ALLOWED_SUFFIXES = ['.png', '.jpg', '.jpeg']
 
 def check_suffix(form, field):
-    print(os.path.splitext(form.image.data)[-1])
+    print(os.path.splitext(form.image.data))
     if os.path.splitext(form.image.data)[-1] not in ALLOWED_SUFFIXES:
         raise ValidationError('Field must be image')
 
@@ -17,6 +17,6 @@ class CreateEvent(FlaskForm):
     about = TextAreaField("Описание мероприятия")
     city = StringField('Город', validators=[DataRequired()])
     place = StringField('Адрес', validators=[DataRequired()])
-    image = FileField('Изображение', validators=[DataRequired()])
+    image = FileField('Изображение', validators=[check_suffix])
     start_date = DateTimeLocalField('Дата начала', validators=[DataRequired()])
     submit = SubmitField('Создать')

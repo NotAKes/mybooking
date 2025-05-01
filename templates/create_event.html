@@ -1,18 +1,83 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="" method="post" novalidate>
-        <div>
-            {{ form.csrf_token }}
+<link rel="stylesheet" href="{{url_for('static', filename='css/create_evet.css')}}" />
+<div class="event-create-container">
+    <div class="event-create-card">
+        <div class="event-create-header text-center mb-4">
+            <h2 class="fw-bold">Создание мероприятия</h2>
+            <p class="text-muted">Заполните информацию о вашем событии</p>
         </div>
-        {% for field in form if field.name != 'csrf_token' %}
-            <div>
-                {{ field.label() }}
-                {{ field() }}
-                {% for error in field.errors %}
-                    <div class="error">{{ error }}</div>
+
+        <form action="" method="post" novalidate class="event-create-form">
+            {{ form.hidden_tag() }}
+            <div class="mb-4">
+                {{ form.name.label(class="form-label fw-bold") }}
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
+                    {{ form.name(class="form-control form-control-lg", placeholder="Концерт, шоу, матч") }}
+                </div>
+                {% for error in form.name.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
                 {% endfor %}
             </div>
-        {% endfor %}
-    </form>
+            <div class="mb-4">
+                {{ form.about.label(class="form-label fw-bold") }}
+                {{ form.about(class="form-control", rows="5", placeholder="Подробное описание мероприятия") }}
+                {% for error in form.about.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    {{ form.city.label(class="form-label fw-bold") }}
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                        {{ form.city(class="form-control", placeholder="Москва") }}
+                    </div>
+                    {% for error in form.city.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-6 mb-4">
+                    {{ form.place.label(class="form-label fw-bold") }}
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-pin-map"></i></span>
+                        {{ form.place(class="form-control", placeholder="Адрес места проведения") }}
+                    </div>
+                    {% for error in form.place.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    {{ form.image.label(class="form-label fw-bold") }}
+                    <div class="input-group">
+                        {{ form.image(class="form-control", accept="image/*") }}
+                    </div>
+                    {% for error in form.image.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                    <small class="text-muted">Поддерживаются .png и .jpg(.jpeg)</small>
+                </div>
+                <div class="col-md-6 mb-4">
+                    {{ form.start_date.label(class="form-label fw-bold") }}
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        {{ form.start_date(class="form-control") }}
+                    </div>
+                    {% for error in form.start_date.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="d-grid">
+                {{ form.submit(class="btn btn-primary btn-lg py-2") }}
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
