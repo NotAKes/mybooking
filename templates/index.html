@@ -15,12 +15,14 @@
         <h2 class="mb-4">Популярные мероприятия</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for event in events %}
+            {% set navigation = event.id %}
                 <div class="col">
                     <div class="card h-100 event-card">
                         <div class="card-body">
                             <h5 class="card-title">{{ event.name }}</h5>
                             <h6 class="card-title">{{ event.place }}</h6>
                             <h6 class="card-title">{{ event.start_date_formatted}}</h6>
+                            <h6 class="btn btn-primary w-20 py-1 mb-1"><a class="nav-link" href="{{ url_for('user_blueprint.get_event_id', id=event.id) }}">Перейти к событию</a></h6>
                         </div>
 
                     </div>
@@ -48,8 +50,8 @@
                 <div class="col-md-4 mb-4">
                     <div class="p-3">
                         <h3><i class="bi bi-headset fs-1 text-primary"></i></h3>
-                        <h4>Поддержка 24/7</h4>
-                        <p>Всегда готовы помочь с любыми вопросами</p>
+                        <h4>Качественная поддержка</h4>
+                        <a>Всегда готовы помочь с любыми вопросами</a>
                     </div>
                 </div>
             </div>
