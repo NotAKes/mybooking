@@ -1,0 +1,89 @@
+.profile-container {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profile-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-title {
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.profile-subtitle {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.profile-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    height: 100%;
+}
+
+.profile-card .card-header {
+    border-radius: 10px 10px 0 0 !important;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+}
+
+.profile-card .card-body {
+    padding: 1.5rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+}
+
+.input-group .form-control:not(:last-child),
+.input-group .btn:not(:last-child):not(.dropdown-toggle) {
+    border-right: none;
+}
+
+#toggleCurrentPassword,
+#toggleNewPassword,
+#toggleRepeatPassword {
+    border-radius: 0 8px 8px 0;
+    border-left: none;
+}
+
+.btn-primary {
+    border: none;
+    padding: 0.75rem;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+}
+
+.btn-warning {
+    background-color: #f6c23e;
+    border: none;
+    padding: 0.75rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+.btn-warning:hover {
+    background-color: #dda20a;
+}
+
+.invalid-feedback {
+    color: #e74a3b;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}

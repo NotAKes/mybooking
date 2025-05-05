@@ -14,5 +14,6 @@ class Event(SqlAlchemyBase, UserMixin):
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     city = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     place = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    path_to_file = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     start_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
     start_date_formatted = sqlalchemy.Column(sqlalchemy.String)
