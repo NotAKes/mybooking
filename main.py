@@ -1,15 +1,18 @@
 import os
 from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from data.concert_hall import ConcertHall
 from data.event import Event
 from forms.user import RegisterForm
 from forms.create_event import CreateEvent
+from forms.tickets import NumberOfTickets
 from sqlalchemy import func
 from data.users import User
 from data import db_session
 from forms.login import LoginForm
 from werkzeug.utils import secure_filename
 import flask
+from wtforms import ValidationError
 from forms.profile import EditAboutForm, EditPasswdForm
 
 app = Flask(__name__)
@@ -53,7 +56,9 @@ def index():
     db_sess = db_session.create_session()
 
     events = sorted(db_sess.query(Event).all(), key=lambda a: a.start_date)
-
+    # print(events[0].hall_id)
+    # hall = db_sess.query(ConcertHall).filter(ConcertHall.id == events[0].hall_id).first()
+    # print(hall.capacity)
     return render_template("index.html", events=events)
 
 
@@ -108,6 +113,8 @@ def create_event():
     got_id = current_user.get_id()
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == got_id).first()
+    halls = db_sess.query(ConcertHall).all()
+    # print(halls[0])
     if not user.is_admin:
         return redirect('/')
     form = CreateEvent()
@@ -116,20 +123,24 @@ def create_event():
         id_counter = db_sess.query(func.count(Event.id)).scalar() + 1
         filename = secure_filename(str(id_counter) + os.path.splitext(form.image.data.filename)[-1])
         form.image.data.save('static/images/' + filename)
+        hall = db_sess.query(ConcertHall).filter(ConcertHall.id == int(form.place.data)).first()
         event = Event(
             name=form.name.data,
             about=form.about.data,
-            city=form.city.data,
-            place=form.place.data,
+            place=hall.fullname,
             path_to_file=filename,
+            price=int(form.price.data),
             start_date=form.start_date.data,
-            start_date_formatted=start_date_formatted
+            start_date_formatted=start_date_formatted,
+            capacity_left=hall.capacity,
+            hall_id=hall.id,
+            city=hall.city
         )
         db_sess.add(event)
         db_sess.commit()
 
         return redirect('/')
-    return render_template('create_event.html', title='Создание мероприятия', form=form)
+    return render_template('create_event.html', title='Создание мероприятия', form=form, halls=halls)
 
 
 @user_blueprint.route('/profile', methods=['GET', 'POST'])
@@ -160,12 +171,13 @@ def profile():
 def profile_view(id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == id).first()
+    # TODO
     list_of_favorites = ['Здесь', 'будет', 'список', 'любимых']
     user_form = {
         'username': user.name,
         'about': user.about,
         'favorite_events': list_of_favorites,
-        'num_of_favorite':len(list_of_favorites)
+        'num_of_favorite': len(list_of_favorites)
     }
     return render_template('profile_view.html', user_form=user_form)
 
@@ -176,16 +188,40 @@ def get_event_id(id):
     db_sess = db_session.create_session()
     event = db_sess.query(Event).filter(Event.id == id).first()
     fields = {
+        'id': id,
         'name': event.name,
         'about': event.about,
         'place': event.place,
         'city': event.city,
         'path': event.path_to_file,
-        'date': event.start_date_formatted
-
+        'date': event.start_date_formatted,
+        'capacity_left': event.capacity_left
     }
 
     return render_template('id_event.html', title=event.name, form=fields)
+
+
+@user_blueprint.route('/event/buy/<int:id>', methods=['GET', 'POST'])
+@login_required
+def buy_ticket(id):
+    db_sess = db_session.create_session()
+    event = db_sess.query(Event).filter(Event.id == id).first()
+    form = NumberOfTickets()
+    if form.validate_on_submit():
+        if form.number_of_tickets.data > event.capacity_left:
+            raise ValidationError
+        else:
+            event.capacity_left = int(event.capacity_left) - int(form.number_of_tickets.data)
+            db_sess.commit()
+            return redirect('/event/buy/success')
+
+    return render_template('buy_ticket.html', event=event, form=form)
+
+
+@user_blueprint.route('/event/buy/success', methods=['GET', 'POST'])
+@login_required
+def buy_success():
+    return render_template('buy_success.html')
 
 
 @user_blueprint.errorhandler(401)
@@ -202,6 +238,10 @@ def err404(e):
 def development():
     return render_template('development.html')
 
+
+@api_blueprint.route('api/events')
+def get_events():
+    pass
 
 if __name__ == '__main__':
     main()

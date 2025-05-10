@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/buy_success.css')}}"/>
+<div class="success-container">
+    <div class="success-card">
+        <div class="success-icon">
+            <i class="bi bi-check-circle-fill"></i>
+        </div>
+        <h1 class="success-title">Покупка успешно завершена!</h1>
+        <p class="success-message">Ваши билеты забронированы. Подробности отправлены на вашу почту.</p>
+        <div class="success-actions">
+            <a href="{{ url_for('user_blueprint.development') }}" class="btn btn-primary">
+                <i class="bi bi-download"></i> Скачать билеты
+            </a>
+            <a href="{{ url_for('user_blueprint.index') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-house"></i> На главную
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
