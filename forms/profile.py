@@ -1,14 +1,7 @@
-import datetime
-import os
-from data.users import User
 from flask_wtf import FlaskForm
 from flask_login import current_user
 from wtforms import PasswordField, StringField, TextAreaField, SubmitField, FileField, ValidationError, EmailField
 from wtforms.validators import DataRequired
-
-
-def check_outdated(form, field):
-    print(current_user.id)
 
 
 class EditAboutForm(FlaskForm):
@@ -19,7 +12,7 @@ class EditAboutForm(FlaskForm):
 
 
 class EditPasswdForm(FlaskForm):
-    password = PasswordField('Старый пароль', validators=[DataRequired(), check_outdated])
+    password = PasswordField('Старый пароль', validators=[DataRequired()])
     new_password = PasswordField('Новый пароль', validators=[DataRequired()])
     new_password_again = PasswordField('Повторите новый пароль', validators=[DataRequired()])
     passwd_confirm = SubmitField('Изменить пароль')

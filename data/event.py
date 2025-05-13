@@ -1,13 +1,12 @@
 import datetime
 import sqlalchemy
-from sqlalchemy import orm, ForeignKey
-from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import orm
 from flask_login import UserMixin
-from .concert_hall import ConcertHall
+from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 
 
-class Event(SqlAlchemyBase, UserMixin):
+class Event(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'events'
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
@@ -23,8 +22,3 @@ class Event(SqlAlchemyBase, UserMixin):
     hall_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("halls.id"))
     hall = orm.relationship('ConcertHall')
-
-    # company_id = Column(Integer, ForeignKey('company.id'), nullable=False)
-    # stakeholder_id = Column(Integer, ForeignKey('company.id'), nullable=False)
-    # company = relationship("Company", foreign_keys=[company_id])
-    # stakeholder = relationship("Company", foreign_keys=[stakeholder_id])

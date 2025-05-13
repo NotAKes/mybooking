@@ -38,12 +38,12 @@
                         <span id="tickets-subtotal">{{ event.price }} ₽</span>
                     </div>
                     <div class="total-row">
-                        <span>Сервисный сбор (10%)</span>
-                        <span id="service-fee">{{ event.price * 0.1 }} ₽</span>
+                        <span>Сервисный сбор (5%)</span>
+                        <span id="service-fee">{{ event.price * 0.05 }} ₽</span>
                     </div>
                     <div class="total-row grand-total">
                         <span>Итого к оплате за каждый билет</span>
-                        <span id="grand-total">{{ "%.2f"|format(event.price * 1.1) }} ₽</span>
+                        <span id="grand-total">{{ "%.3f"|format(event.price * 1.05) }} ₽</span>
                     </div>
                 </div>
 

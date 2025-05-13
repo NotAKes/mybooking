@@ -12,6 +12,8 @@ db_session.global_init("db/database.db")
 
 
 def check_suffix(form, field):
+    if not form.image.data.filename:
+        return
     if os.path.splitext(form.image.data.filename)[-1] not in ALLOWED_SUFFIXES:
         raise ValidationError('Field must be image')
 

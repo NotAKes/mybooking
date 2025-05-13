@@ -24,6 +24,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('user_blueprint.logout') }}">Выйти</a>
                         </li>
+                        {% if current_user.is_admin %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('user_blueprint.create_event') }}">Создать мероприятие</a>
+                        </li>
+                        {% endif %}
                      {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('user_blueprint.login') }}">Вход</a>

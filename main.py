@@ -12,13 +12,21 @@ from data import db_session
 from forms.login import LoginForm
 from werkzeug.utils import secure_filename
 import flask
+from data.events_api import EventListResource, EventResource
+from flask_restful import Api
+
 from wtforms import ValidationError
 from forms.profile import EditAboutForm, EditPasswdForm
 
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 upload_folder = os.path.join('static', 'uploads')
 app.config['UPLOAD'] = upload_folder
+
+api = Api(app)
+api.add_resource(EventListResource, '/api/events')
+api.add_resource(EventResource, '/api/events/<events_id>')
 
 user_blueprint = flask.Blueprint(
     'user_blueprint',
@@ -54,11 +62,7 @@ def load_user(user_id):
 @user_blueprint.route("/")
 def index():
     db_sess = db_session.create_session()
-
     events = sorted(db_sess.query(Event).all(), key=lambda a: a.start_date)
-    # print(events[0].hall_id)
-    # hall = db_sess.query(ConcertHall).filter(ConcertHall.id == events[0].hall_id).first()
-    # print(hall.capacity)
     return render_template("index.html", events=events)
 
 
@@ -114,7 +118,6 @@ def create_event():
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == got_id).first()
     halls = db_sess.query(ConcertHall).all()
-    # print(halls[0])
     if not user.is_admin:
         return redirect('/')
     form = CreateEvent()
@@ -238,10 +241,6 @@ def err404(e):
 def development():
     return render_template('development.html')
 
-
-@api_blueprint.route('api/events')
-def get_events():
-    pass
 
 if __name__ == '__main__':
     main()
