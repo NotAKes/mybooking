@@ -1,0 +1,145 @@
+.event-detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.event-header {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.event-cover-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+
+.event-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.event-header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+}
+
+.event-header-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    color: white;
+    z-index: 2;
+}
+
+.event-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.event-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.event-main-content {
+    flex: 1 0 auto;
+    padding: 2rem 0;
+}
+
+.event-description {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.event-description .card-body {
+    padding: 2rem;
+}
+
+.event-description h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.event-description h3 i {
+    color: #4e73df;
+    margin-right: 0.5rem;
+}
+
+.event-description p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.event-details-card {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.event-details-card .card-body {
+    padding: 1.5rem;
+}
+
+.event-details-card h4 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.event-details-card h4 i {
+    color: #4e73df;
+    margin-right: 0.5rem;
+}
+
+.event-details-list {
+    list-style: none;
+    padding: 0;
+}
+
+.event-details-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.event-details-list li:last-child {
+    border-bottom: none;
+}
+
+.event-details-list i {
+    color: #4e73df;
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+}
+
+.btn-primary {
+    border: none;
+    padding: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    transform: translateY(-2px);
+}

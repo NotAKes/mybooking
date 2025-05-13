@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/profile_view.css')}}" />
+<div class="user-profile-container">
+    <div class="user-profile-header">
+            <div class="user-meta">
+                <h1 class="username">{{ user_form['username'] }}</h1>
+                <div class="stats">
+                    <span class="stat"><i class="bi bi-calendar-check"></i> {{user_form['num_of_favorite']}} событий в избранном</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="user-profile-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card about-card">
+                        <div class="card-body">
+                            <h3 class="card-title"><i class="bi bi-info-circle"></i> О пользователе</h3>
+                            <p class="about-text">
+                                {% if user_form['about'] %}
+                                    {{ user_form['about'] }}
+                                {% else %}
+                                    Пользователь пока не добавил информацию о себе.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card favorite-events-card">
+                        <div class="card-body">
+                            <h3 class="card-title"><i class="bi bi-heart"></i> Любимые события</h3>
+                            {% if user_form['favorite_events'] %}
+                                <ul class="favorite-events-list">
+                                    {% for event in user_form['favorite_events'] %}
+                                        <li>{{ event }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">Пока нет избранных событий</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+.user-profile-container {
+    color: #333;
+}
+
+.user-profile-header {
+    position: relative;
+    margin-bottom: 80px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: flex-end;
+    padding: 0 2rem;
+    margin-top: -80px;
+}
+
+.user-meta {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.username {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.stats {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+.stat i {
+    margin-right: 0.5rem;
+    color: #4e73df;
+}
+
+.user-profile-content {
+    padding: 0 1rem 3rem;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.card-title i {
+    color: #4e73df;
+    margin-right: 0.5rem;
+}
+
+.about-card .card-body {
+    padding: 2rem;
+}
+
+.about-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #555;
+}
+
+.favorite-events-card .card-body {
+    padding: 1.5rem;
+}
+
+.favorite-events-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.favorite-events-list li {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.favorite-events-list li:before {
+    content: "•";
+    color: #4e73df;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}

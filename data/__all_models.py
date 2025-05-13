@@ -1,2 +1,1 @@
-from . import users
-from . import event
+from . import users, concert_hall, event

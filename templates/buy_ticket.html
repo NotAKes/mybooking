@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/buy_ticket.css')}}"/>
+<div class="ticket-selection-container">
+    <div class="ticket-selection-card">
+        <div class="event-header">
+            <h2 class="event-title">{{ event.name }}</h2>
+            <div class="event-meta">
+                <span><i class="bi bi-calendar-event"></i> {{ event.start_date.strftime('%d.%m.%Y в %H:%M') }}</span>
+                <span><i class="bi bi-geo-alt"></i> {{ event.place }}</span>
+            </div>
+        </div>
+
+        <div class="ticket-selection-form">
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+
+                <div class="ticket-type">
+                    <h3>Стандартный билет</h3>
+                    <p class="price">{{ event.price }} ₽ за шт.</p>
+
+                    <div class="form-group">
+                        {{ form.number_of_tickets.label(class="form-label") }}
+                        <div class="quantity-selector">
+                            {{ form.number_of_tickets(class="form-control quantity-input", value="1", min="1") }}
+                        </div>
+                        {% for error in form.number_of_tickets.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="total-section">
+                    <div class="total-row">
+                        <span>Билеты (×<span id="quantity-display">1</span>)</span>
+                        <span id="tickets-subtotal">{{ event.price }} ₽</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Сервисный сбор (5%)</span>
+                        <span id="service-fee">{{ event.price * 0.05 }} ₽</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Итого к оплате за каждый билет</span>
+                        <span id="grand-total">{{ "%.3f"|format(event.price * 1.05) }} ₽</span>
+                    </div>
+                </div>
+
+                <div class="d-grid mt-4">
+                    {{ form.submit(class="btn btn-primary btn-lg", value="Перейти к оплате") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
