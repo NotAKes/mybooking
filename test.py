@@ -1,7 +1,7 @@
 from requests import get, post, delete
 from pprint import pprint
 
-
+# тест на гет запрос
 def printing_test_get(server):
     print('API GET METHOD TEST')
     pprint(get(f'{server}/api/events').json())  # корректный
@@ -13,7 +13,7 @@ def printing_test_get(server):
     pprint(get(f'{server}/api/events/q').json())  # неорректный
     print()
 
-
+# тест на пост запрос
 def printing_test_post(server):
     print('API POST METHOD TEST')
     pprint(post(f'{server}/api/events',
@@ -23,7 +23,7 @@ def printing_test_post(server):
     print()
     pprint(post(f'{server}/api/events', json={}).json())  # некорректный
 
-
+# тест на делете запрос
 def printing_test_delete(server):
     print('API DELETE METHOD TEST')
     pprint(delete(f'{server}/api/events/999999').json())  # некорректный

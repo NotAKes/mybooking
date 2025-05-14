@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from .db_session import SqlAlchemyBase
 
 
+# создание класса пользователя с методами для вывода, установки пароля и проверки пароля
 class User(SqlAlchemyBase, UserMixin):
     __tablename__ = 'users'
 

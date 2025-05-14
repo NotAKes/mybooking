@@ -7,10 +7,12 @@ from wtforms.validators import DataRequired
 from data import db_session
 from data.concert_hall import ConcertHall
 
+# форматы изображений и инициализация
 ALLOWED_SUFFIXES = ['.png', '.jpg', '.jpeg']
 db_session.global_init("db/database.db")
 
 
+# проверка на картинку
 def check_suffix(form, field):
     if not form.image.data.filename:
         return
@@ -18,11 +20,13 @@ def check_suffix(form, field):
         raise ValidationError('Field must be image')
 
 
+# проверка даты
 def check_outdated(form, field):
     if form.start_date.data < datetime.datetime.now():
         raise ValidationError('This date is unavailable')
 
 
+# получение концертных залов
 def get_halls():
     db_sess = db_session.create_session()
     formatted_list = []
@@ -31,6 +35,7 @@ def get_halls():
     return formatted_list
 
 
+# класс формы ивента
 class CreateEvent(FlaskForm):
     name = StringField('Название мероприятия', validators=[DataRequired()])
     about = TextAreaField("Описание мероприятия")
