@@ -5,6 +5,7 @@ from data.concert_hall import ConcertHall
 from flask import jsonify, request
 
 
+# проверка на существование
 def abort_if_events_not_found(events_id):
     session = db_session.create_session()
     events = session.query(Event).get(events_id)
@@ -12,17 +13,20 @@ def abort_if_events_not_found(events_id):
         abort(404, message=f"Events {events_id} not found")
 
 
+# проверка формата ввода
 def abort_if_wrong_format(events_id):
     if not events_id.isdigit():
         abort(404, message=f"Wrong format! Id must be integer")
 
 
+# парсер
 parser = reqparse.RequestParser()
 parser.add_argument('name', required=True)
 parser.add_argument('about', required=True)
 parser.add_argument('hall_id', required=True)
 
 
+# класс апи ивента
 class EventResource(Resource):
     def get(self, events_id):
         abort_if_wrong_format(events_id)
@@ -42,6 +46,7 @@ class EventResource(Resource):
         return jsonify({'success': 'OK'})
 
 
+# класс апи ивентов
 class EventListResource(Resource):
     def get(self):
         session = db_session.create_session()

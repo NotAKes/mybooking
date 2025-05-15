@@ -7,6 +7,7 @@ SqlAlchemyBase = orm.declarative_base()
 __factory = None
 
 
+# функция инициализации
 def global_init(db_file):
     global __factory
 

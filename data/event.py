@@ -6,6 +6,7 @@ from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 
 
+# класс ивента связанный с концертным залом
 class Event(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'events'
 

@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from flask_login import current_user
 from wtforms import PasswordField, StringField, TextAreaField, SubmitField, FileField, ValidationError, EmailField
 from wtforms.validators import DataRequired
 
 
+# форма редактирования поля о себе
 class EditAboutForm(FlaskForm):
     name = StringField('Имя пользователя', validators=[DataRequired()])
     email = EmailField('Почта', validators=[DataRequired()])
@@ -11,6 +11,7 @@ class EditAboutForm(FlaskForm):
     about_confirm = SubmitField('Изменить информацию о себе', validators=[DataRequired()])
 
 
+# форма редактирования пароля
 class EditPasswdForm(FlaskForm):
     password = PasswordField('Старый пароль', validators=[DataRequired()])
     new_password = PasswordField('Новый пароль', validators=[DataRequired()])

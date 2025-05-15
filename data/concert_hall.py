@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from .db_session import SqlAlchemyBase
 
 
+# класс концертного зала связанный с ивентом
 class ConcertHall(SqlAlchemyBase, UserMixin):
     __tablename__ = 'halls'
 
