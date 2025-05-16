@@ -24,11 +24,14 @@
                     <div class="form-group">
                         {{ form.number_of_tickets.label(class="form-label") }}
                         <div class="quantity-selector">
-                            {{ form.number_of_tickets(class="form-control quantity-input", value="1", min="1") }}
+                            {{ form.number_of_tickets(class="form-control quantity-input", value="1", min="1", max="7") }}
                         </div>
                         {% for error in form.number_of_tickets.errors %}
                         <div class="invalid-feedback d-block">{{ error }}</div>
                         {% endfor %}
+                        {% if error %}
+                        <div class="invalid-feedback d-block">Неверное количество билетов</div>
+                        {% endif %}
                     </div>
                 </div>
 

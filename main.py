@@ -1,4 +1,6 @@
 import os
+
+from aiogram.utils.chat_member import USERS
 from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from data.concert_hall import ConcertHall
@@ -198,6 +200,9 @@ def profile():
 @login_required
 def profile_view(id):
     db_sess = db_session.create_session()
+    aviable_ids = [i.id for i in db_sess.query(User).all()]
+    if id not in aviable_ids:
+        return redirect('/404')
     user = db_sess.query(User).filter(User.id == id).first()
     # задел под добавление любимых событий
     list_of_favorites = ['Здесь', 'будет', 'список', 'любимых']
@@ -240,8 +245,8 @@ def buy_ticket(id):
     form = NumberOfTickets()
     if form.validate_on_submit():
         # проверка на количество билетов
-        if form.number_of_tickets.data > event.capacity_left:
-            raise ValidationError
+        if form.number_of_tickets.data > event.capacity_left or form.number_of_tickets.data > 7:
+            return render_template('buy_ticket.html', event=event, form=form, error='error')
         else:
             # успешная покупка
             event.capacity_left = int(event.capacity_left) - int(form.number_of_tickets.data)
