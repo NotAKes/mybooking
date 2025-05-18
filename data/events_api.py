@@ -38,12 +38,13 @@ class EventResource(Resource):
                                                        'price', 'place'))})
 
     def delete(self, events_id):
-        abort_if_events_not_found(events_id)
-        session = db_session.create_session()
-        events = session.query(Event).get(events_id)
-        session.delete(events)
-        session.commit()
-        return jsonify({'success': 'OK'})
+        return
+        # abort_if_events_not_found(events_id)
+        # session = db_session.create_session()
+        # events = session.query(Event).get(events_id)
+        # session.delete(events)
+        # session.commit()
+        # return jsonify({'success': 'OK'})
 
 
 # класс апи ивентов
@@ -56,19 +57,20 @@ class EventListResource(Resource):
                   'price', 'place')) for item in events]})
 
     def post(self):
-        args = parser.parse_args()
-        session = db_session.create_session()
-        hall = session.query(ConcertHall).filter(ConcertHall.id == args['hall_id']).first()
-        event = Event(
-            name=args['name'],
-            about=args['about'],
-            place=hall.fullname,
-            capacity_left=hall.capacity,
-            city=hall.city,
-            hall_id=args['hall_id']
-
-        )
-        session.add(event)
-        session.commit()
-        return jsonify({'event': {'id': event.id, 'name': event.name, 'hall_id': event.hall_id},
-                        'success': 'OK'})
+        return
+        # args = parser.parse_args()
+        # session = db_session.create_session()
+        # hall = session.query(ConcertHall).filter(ConcertHall.id == args['hall_id']).first()
+        # event = Event(
+        #     name=args['name'],
+        #     about=args['about'],
+        #     place=hall.fullname,
+        #     capacity_left=hall.capacity,
+        #     city=hall.city,
+        #     hall_id=args['hall_id']
+        #
+        # )
+        # session.add(event)
+        # session.commit()
+        # return jsonify({'event': {'id': event.id, 'name': event.name, 'hall_id': event.hall_id},
+        #                 'success': 'OK'})
