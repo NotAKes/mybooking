@@ -53,7 +53,7 @@ def main():
     app.register_blueprint(user_blueprint)
     app.register_error_handler(401, err401)
     app.register_error_handler(404, err404)
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=80)
 
 
 # логин
