@@ -282,5 +282,4 @@ def development():
 
 
 # запуск
-if __name__ == '__main__':
-    main()
+main()
